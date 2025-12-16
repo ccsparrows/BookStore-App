@@ -136,7 +136,7 @@ export default function Profile() {
 
       {/* YOUR RECOMMENDATIONS */}
       <View style={styles.booksHeader}>
-        <Text style={styles.booksTitle}>Your Recommendations 📚</Text>
+        <Text style={styles.booksTitle}>你的分享 📚</Text>
         <Text style={styles.booksCount}>{books.length} books</Text>
       </View>
 

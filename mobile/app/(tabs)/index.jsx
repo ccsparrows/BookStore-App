@@ -91,7 +91,7 @@ export default function Home() {
         <Text style={styles.bookTitle}>{item.title}</Text>
         <View style={styles.ratingContainer}>{renderRatingStars(item.rating)}</View>
         <Text style={styles.caption}>{item.caption}</Text>
-        <Text style={styles.date}>Shared on {formatPublishDate(item.createdAt)}</Text>
+        <Text style={styles.date}>分享于 {formatPublishDate(item.createdAt)}</Text>
       </View>
     </View>
   );
@@ -135,7 +135,7 @@ export default function Home() {
         ListHeaderComponent={
           <View style={styles.header}>
             <Text style={styles.headerTitle}>BookWorm 🐛</Text>
-            <Text style={styles.headerSubtitle}>Discover great reads from the community👇</Text>
+            <Text style={styles.headerSubtitle}>一起来看大家分享的书籍👇</Text>
           </View>
         }
         ListFooterComponent={

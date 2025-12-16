@@ -11,6 +11,7 @@ import {
   Image,
   ActivityIndicator,
 } from "react-native";
+import * as ImageManipulator from 'expo-image-manipulator';
 import { useRouter } from "expo-router";
 import styles from "../../assets/styles/create.styles";
 import { Ionicons } from "@expo/vector-icons";
@@ -58,28 +59,30 @@ export default function Create() {
         mediaTypes: "images",
         allowsEditing: true,
         aspect: [4, 3],
-        quality: 0.5, // lower quality for smaller base64
-        base64: true,
+        quality: 1, 
+        base64: false,
       });
 
       if (!result.canceled) {
-        setImage(result.assets[0].uri);
+        const uri = result.assets[0].uri;
+        setImage(uri);
 
-        // if base64 is provided, use it
-
-        if (result.assets[0].base64) {
-          setImageBase64(result.assets[0].base64);
-        } else {
-          // otherwise, convert to base64
-          const base64 = await FileSystem.readAsStringAsync(
-            result.assets[0].uri,
-            {
-              encoding: EncodingType.Base64, // ✅ works
-            }
-          );
-
-          setImageBase64(base64);
+        // 压缩图片
+       const compressedImage = await ImageManipulator.manipulateAsync(
+        uri,
+        [
+          {
+            resize: { width: 800 }, // 限制最大宽度
+          },
+        ],
+        {
+          compress: 0.5,
+          format: ImageManipulator.SaveFormat.JPEG,
+          base64: true,
         }
+      );
+
+      setImageBase64(compressedImage.base64);
       }
     } catch (error) {
       console.error("Error picking image:", error);
@@ -162,16 +165,16 @@ export default function Create() {
         <View style={styles.card}>
           {/* HEADER */}
           <View style={styles.header}>
-            <Text style={styles.title}>Add Book Recommendation</Text>
+            <Text style={styles.title}>新增图书推荐</Text>
             <Text style={styles.subtitle}>
-              Share your favorite reads with others
+              在这里向大家分享你喜欢的书籍吧！
             </Text>
           </View>
 
           <View style={styles.form}>
             {/* BOOK TITLE */}
             <View style={styles.formGroup}>
-              <Text style={styles.label}>Book Title</Text>
+              <Text style={styles.label}>书名</Text>
               <View style={styles.inputContainer}>
                 <Ionicons
                   name="book-outline"
@@ -181,7 +184,7 @@ export default function Create() {
                 />
                 <TextInput
                   style={styles.input}
-                  placeholder="Enter book title"
+                  placeholder="请输入书名"
                   placeholderTextColor={COLORS.placeholderText}
                   value={title}
                   onChangeText={setTitle}
@@ -191,13 +194,13 @@ export default function Create() {
 
             {/* RATING */}
             <View style={styles.formGroup}>
-              <Text style={styles.label}>Your Rating</Text>
+              <Text style={styles.label}>评分</Text>
               {renderRatingPicker()}
             </View>
 
             {/* IMAGE */}
             <View style={styles.formGroup}>
-              <Text style={styles.label}>Book Image</Text>
+              <Text style={styles.label}>书籍封面</Text>
               <TouchableOpacity style={styles.imagePicker} onPress={pickImage}>
                 {image ? (
                   <Image source={{ uri: image }} style={styles.previewImage} />
@@ -209,7 +212,7 @@ export default function Create() {
                       color={COLORS.textSecondary}
                     />
                     <Text style={styles.placeholderText}>
-                      Tap to select image
+                      请选择图片
                     </Text>
                   </View>
                 )}
@@ -218,10 +221,10 @@ export default function Create() {
 
             {/* CAPTION */}
             <View style={styles.formGroup}>
-              <Text style={styles.label}>Caption</Text>
+              <Text style={styles.label}>书评</Text>
               <TextInput
                 style={styles.textArea}
-                placeholder="Write your review or thoughts about this book..."
+                placeholder="留下你对这本书的评价或感想..."
                 placeholderTextColor={COLORS.placeholderText}
                 value={caption}
                 onChangeText={setCaption}
