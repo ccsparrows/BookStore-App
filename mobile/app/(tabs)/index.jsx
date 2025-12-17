@@ -146,8 +146,8 @@ export default function Home() {
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Ionicons name="book-outline" size={60} color={COLORS.textSecondary} />
-            <Text style={styles.emptyText}>No recommendations yet</Text>
-            <Text style={styles.emptySubtext}>Be the first to share a book!</Text>
+            <Text style={styles.emptyText}>还没有任何推荐内容</Text>
+            <Text style={styles.emptySubtext}>添加你的第一本书！</Text>
           </View>
         }
       />

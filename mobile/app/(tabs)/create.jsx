@@ -247,7 +247,7 @@ export default function Create() {
                     color={COLORS.white}
                     style={styles.buttonIcon}
                   />
-                  <Text style={styles.buttonText}>Share</Text>
+                  <Text style={styles.buttonText}>分享</Text>
                 </>
               )}
             </TouchableOpacity>

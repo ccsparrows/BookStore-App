@@ -157,9 +157,9 @@ export default function Profile() {
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Ionicons name="book-outline" size={50} color={COLORS.textSecondary} />
-            <Text style={styles.emptyText}>No recommendations yet</Text>
+            <Text style={styles.emptyText}>还没有任何推荐内容</Text>
             <TouchableOpacity style={styles.addButton} onPress={() => router.push("/create")}>
-              <Text style={styles.addButtonText}>Add Your First Book</Text>
+              <Text style={styles.addButtonText}>添加你的第一本书</Text>
             </TouchableOpacity>
           </View>
         }
